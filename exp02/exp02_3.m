@@ -18,7 +18,9 @@ R = filter2(fspecial('average',6),R) / 255;
 G = filter2(fspecial('average',6),G) / 255;
 B = filter2(fspecial('average',6),B) / 255;
 % 对彩色图像R,G，B三个通道分别进行6×6模板的均值滤波
-img2 = cat(3,R,G,B);
+img2(:, :, 1) = R;
+img2(:, :, 2) = G;
+img2(:, :, 3) = B;
 
 figure(n), subplot(1, 2, 1),imshow(img1);
 title('原始图像');
