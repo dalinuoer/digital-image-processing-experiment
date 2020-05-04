@@ -1,5 +1,47 @@
 % Exp04-2
 % Author: Qin Hao
-% Date: 2020/4/24
+% Date: 2020/5/4
 
-%------Testç›®å½•ä¸‹æœ‰å›¾åƒboardWithNoise.jpgï¼Œç”¨Matlabå†™ç¨‹åºï¼Œé‡‡ç”¨è‡ªé€‚åº”ä¸­å€¼æ»¤æ³¢å™¨å»é™¤å™ªå£°å¹²æ‰°ã€‚------
+%------TestÄ¿Â¼ÏÂÓĞÍ¼ÏñboardWithNoise.jpg£¬ÓÃMatlabĞ´³ÌĞò£¬²ÉÓÃ×ÔÊÊÓ¦ÖĞÖµÂË²¨Æ÷È¥³ıÔëÉù¸ÉÈÅ¡£------
+
+% ×ÔÊÊÓ¦ÖĞÖµÂË²¨Æ÷»á¸ù¾İÒ»¶¨µÄÉè¶¨Ìõ¼ş¸Ä±äÂË´°µÄ´óĞ¡,¼´µ±ÔëÉùÃæ»ı½Ï´óÊ±,Í¨¹ıÔö¼ÓÂË´°µÄ´óĞ¡½«ÔëÉùÓèÒÔÈ¥³ı,
+% Í¬Ê±µ±ÅĞ¶ÏÂË´°ÖĞĞÄµÄÏñËØ²»ÊÇÔëÉùÊ±,²»¸Ä±äÆäµ±Ç°ÏñËØÖµ,¼´²»ÓÃÖĞÖµ´úÌæ¡£
+
+% ÕâÑù,×ÔÊÊÓ¦ÖĞÖµÂË²¨Æ÷¿ÉÒÔ´¦ÀíÔëÉù¸ÅÂÊ¸ü´óµÄÂö³åÔëÉù,
+% Í¬Ê±ÔÚÆ½»¬·ÇÂö³åÔëÉùÍ¼ÏñÊ±ÄÜ¹»¸üºÃµØ±£³ÖÍ¼ÏñÏ¸½Ú,ÕâÊÇ´«Í³ÖĞÖµÂË²¨Æ÷×ö²»µ½µÄ
+
+% ¶ÁÈëÔ­Ê¼Í¼Ïñ
+img = imread('test/boardWithNoise.jpg');
+% ×ª»»Îª»Ò¶ÈÍ¼Æ¬
+g = rgb2gray(img);
+f = g;
+f(:) = 0;
+been = false(size(g)); % ÒÑ¾­´¦Àí¹ıµÄµØ·½
+Smax = 325; % Sxy ËùÔÊĞíµÄ×î´óÖµ, boardWithNoise.jpg ´óĞ¡Îª 325 * 325
+for i = 3 : 2 : Smax
+    Zmin = ordfilt2(g, 1, ones(i, i), 'symmetric'); % Zmin ÊÇÔÚSxyÂË´°ÄÚ»Ò¶ÈµÄ×îĞ¡Öµ
+    Zmax = ordfilt2(g, i * i, ones(i, i), 'symmetric'); % Zmax ÊÇÔÚSxyÂË´°ÄÚ»Ò¶ÈµÄ×î´óÖµ
+    Zmed = medfilt2(g, [i i], 'symmetric'); % Zmed ÊÇÔÚSxyÂË´°ÄÚ»Ò¶ÈµÄÖĞÖµ
+
+    prolevelB = (Zmed > Zmin) & (Zmax > Zmed) & ~been; % ĞèÒª×ªµ½B²½ÖèµÄÏñËØ
+    zb = (g > Zmin) & (Zmax > g);
+
+    outZxy = prolevelB & zb; % Âú×ã²½ÖèA£¬BµÄÊä³öÔ­Öµ
+    outZmed = prolevelB & ~zb; % Âú×ãA,²»Âú×ãBµÄÊä³öÖĞÖµ
+
+    f(outZxy) = g(outZxy);
+    f(outZmed) = Zmed(outZmed);
+
+    been = been | prolevelB;
+    if all(been(:))
+        break;
+    end
+end
+f(~been) = g(~been); % ³¬¹ı´°¿Ú´óĞ¡Ã»±»´¦ÀíµÄÏñËØÎ»ÖÃÊä³öÔ­Öµ
+
+% ÏÔÊ¾Ô­Ê¼Í¼Ïñ
+figure, subplot(1, 2, 1), imshow(img);
+title("Ô­Ê¼Í¼Ïñ");
+% ÏÔÊ¾×ÔÊÊÓ¦ÖĞÖµÂË²¨Í¼Ïñ
+subplot(1, 2, 2), imshow(f);
+title("×ÔÊÊÓ¦ÖĞÖµÂË²¨Í¼Ïñ");
