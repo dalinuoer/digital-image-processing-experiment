@@ -23,13 +23,12 @@ ratio1 = imratio(img, c1); % 计算压缩率
 fprintf('The compression ratio of huffman is %f.\n', ratio1);
 
 % JPEG
-quality = 0.10; % 质量因子
+quality = 0.90; % 质量因子
 c2 = im2jpeg(img, quality); % 编码
 img2 = jpeg2im(c2); % 解码
 figure, imshow(img2); % 显示JPEG 压缩图像
 ratio2 = imratio(img, c2); % 计算压缩率
-fprintf('The compression ratio of JPEG with quality factor %.2f is %f.\n', ...
-        quality, ratio2);
+fprintf('The compression ratio of JPEG with quality factor %.2f is %f.\n', quality, ratio2);
 
 % JPEG2000
 n = 5; % 进制
@@ -38,5 +37,4 @@ c3 = im2jpeg2k(img, n, q); % 编码
 img3 = jpeg2k2im(c3); % 解码
 figure, imshow(img3); % 显示JPEG2000 压缩图像
 ratio3 = imratio(img, c3); % 计算压缩率
-fprintf('The compression ratio of JPEG2000 with n = %d and q = [%.2f %.2f] is %f.\n', ...
-        n, q(1), q(2), ratio3);
+fprintf('The compression ratio of JPEG2000 with n = %d and q = [%.2f %.2f] is %f.\n', n, q(1), q(2), ratio3);
