@@ -23,6 +23,7 @@ img1 = imopen(img1, SE1); % 开操作
 figure, imshow(img1);
 
 % 处理 2.jpg
+% 腐蚀操作，去除白点
 img2 = imread('2.jpg');
 thresh2 = graythresh(img2); % 自动确定阈值
 img2 = im2bw(img2, thresh2); % 二值化
@@ -34,6 +35,7 @@ img2 = imdilate(img2, SE1); % 膨胀
 figure, imshow(img2);
 
 % 处理 3.jpg
+% 腐蚀操作，去除黑点
 img3 = imread('3.jpg');
 thresh3 = graythresh(img3); % 自动确定阈值
 img3 = im2bw(img3, thresh3); % 二值化
@@ -41,5 +43,7 @@ figure, imshow(img3);
 
 img3 = imerode(img3, SE1); % 腐蚀
 img3 = imdilate(img3, SE1); % 膨胀
+
+img3 = imclose(img3, SE2); % 闭操作
 
 figure, imshow(img3);
