@@ -1,7 +1,7 @@
 % Big Experiment - 3/4
 % 缺陷检测
 % Author: Qin Hao
-% Date: 2020/6/7
+% Date: 2020/6/12
 
 % (3)对于图像IMG_1532.jpg，根据所给图，找出图中洞的区域，并将其边缘用连续的线描出来。
 % 并且测出洞的面积，即输出洞内包含的象素点的个数。
@@ -27,6 +27,10 @@ ed = imclose(ed, SE2); % 闭操作
 % 破洞边缘
 figure, imshow(ed);
 
+% 把破洞裁剪出来
+ed = imcrop(ed, [310, 300, 50, 90]);
+figure, imshow(ed);
+
 % 计算洞内包含的像素点的个数
 total = 0; % 总数
 count = 0; % 每一行像素数
@@ -36,14 +40,11 @@ begin = 0;
 [m, n] = size(ed);
 for i = 1 : m
     for j = 1 : n
-        if ed(i, j) == 255 && begin == 0
+        if ed(i, j) == 1 && begin == 0
             begin = 1;
         end
         if begin == 1 && ed(i, j) == 0
             count = count + 1;
-        end
-        if begin == 1 && ed(i, j) == 255
-            break;
         end
     end
     total = total + count;

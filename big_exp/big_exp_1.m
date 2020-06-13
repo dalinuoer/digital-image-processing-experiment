@@ -29,7 +29,8 @@ for i = 1 : m
     for j = 1 : n
         result(i, j) = 255;
         % 各像素在三个通道之间的最大差值
-        delta(i, j) = max([R(i, j), G(i, j), B(i, j)]) - min([R(i, j), G(i, j), B(i, j)]);
+        delta(i, j) = max([R(i, j), G(i, j), B(i, j)]) - ...
+                    min([R(i, j), G(i, j), B(i, j)]);
     end
 end
 
@@ -55,5 +56,6 @@ if max(max(delta)) > 60
         end
     end
 end
+
 % 显示杂质二值图像
 figure, imshow(uint8(result));
