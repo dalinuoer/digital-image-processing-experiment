@@ -11,7 +11,7 @@ img = imread('IMG_1532.jpg');
 % 转换为灰度图
 img = rgb2gray(img);
 % 显示灰度图
-figure, imshow(img);
+subplot(1, 2, 1), imshow(img), title('Original image');
 
 % 均值滤波，去除花纹干扰
 img = filter2(fspecial('average', 5), img);
@@ -25,11 +25,11 @@ SE2 = strel('square', 4);
 ed = imclose(ed, SE2); % 闭操作
 
 % 破洞边缘
-figure, imshow(ed);
+subplot(1, 2, 2), imshow(ed), title('Detected result');
 
 % 把破洞裁剪出来
 ed = imcrop(ed, [310, 300, 50, 90]);
-figure, imshow(ed);
+%figure, imshow(ed);
 
 % 计算洞内包含的像素点的个数
 total = 0; % 总数
@@ -55,3 +55,4 @@ end
 
 % 输出总的像素个数
 fprintf('The total number of pixel is %d.\n', total);
+% The total number of pixel is 2351.

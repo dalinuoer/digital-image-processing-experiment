@@ -9,7 +9,7 @@
 % 读取图像
 img = imread('hh3.bmp');
 %img = imread('hh6.bmp');
-figure, imshow(img);
+subplot(1, 2, 1), imshow(img), title('Original image');
 
 img = double(img);
 
@@ -58,4 +58,4 @@ if max(max(delta)) > 60
 end
 
 % 显示杂质二值图像
-figure, imshow(uint8(result));
+subplot(1, 2, 2), imshow(uint8(result)), title('Detected result');
