@@ -7,8 +7,8 @@
 % （如图中的红色线条），将棉花中的杂质部分标识出来。
 
 % 读取图像
-img = imread('hh3.bmp');
-%img = imread('hh6.bmp');
+%img = imread('hh3.bmp');
+img = imread('hh6.bmp');
 subplot(1, 2, 1), imshow(img), title('Original image');
 
 img = double(img);

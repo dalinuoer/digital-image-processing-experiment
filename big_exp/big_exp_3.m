@@ -29,7 +29,7 @@ subplot(1, 2, 2), imshow(ed), title('Detected result');
 
 % 把破洞裁剪出来
 ed = imcrop(ed, [310, 300, 50, 90]);
-%figure, imshow(ed);
+%figure, imshow(ed), title('Edge');
 
 % 计算洞内包含的像素点的个数
 total = 0; % 总数
@@ -55,4 +55,3 @@ end
 
 % 输出总的像素个数
 fprintf('The total number of pixel is %d.\n', total);
-% The total number of pixel is 2351.
